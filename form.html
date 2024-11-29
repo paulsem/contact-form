@@ -17,11 +17,24 @@
         <label for="originId">Origin ID:</label>
         <input type="text" id="originId" name="originId" required>
 
+        <!-- Honeypot field -->
+        <div style="display:none;">
+            <label for="fax_number">Fax Number:</label>
+            <input type="text" name="fax_number" id="fax_number" autocomplete="off">
+        </div>
+        
+        <!-- Hidden timestamp field -->
+        <input type="hidden" name="form_load_time" id="form_load_time">
+
         <button type="submit">Submit</button>
     </form>
     <p id="response"></p>
 
     <script>
+
+        // Set the timestamp when the form loads
+        document.getElementById('form_load_time').value = Date.now();
+
         document.getElementById('form').addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -29,6 +42,8 @@
             formData.append('name', document.getElementById('name').value);
             formData.append('email', document.getElementById('email').value);
             formData.append('originId', document.getElementById('originId').value);
+            formData.append('fax_number', document.getElementById('fax_number').value);
+            formData.append('form_load_time', document.getElementById('form_load_time').value);
 
             try {
                 const response = await fetch('http://localhost:3000/', {

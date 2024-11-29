@@ -20,15 +20,15 @@ app.get('/', (req, res) => {
 
 // Handle POST requests
 app.post('/', async (req, res) => {
-    const { name, email, originId } = req.body;
+    const { name, email, originId, fax_number, form_load_time } = req.body;
 
     try {
-        console.log('Received form data:', { name, email, originId });
+        console.log('Received form data:', { name, email, originId, fax_number, form_load_time });
 
         // Send the form data to the NiFi endpoint
         const response = await axios.post(
             'http://localhost:9090?tenantId=tenant1',
-            new URLSearchParams({ name, email, originId }).toString(),
+            new URLSearchParams({ name, email, originId, fax_number, form_load_time }).toString(),
             {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 maxRedirects: 0, // Prevent Axios from following the redirect automatically
